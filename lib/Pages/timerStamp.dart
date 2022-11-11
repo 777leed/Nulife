@@ -2,6 +2,7 @@
 import 'package:percent_indicator/percent_indicator.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:vibration/vibration.dart';
 
 class myTimer extends StatefulWidget {
   const myTimer({super.key});
@@ -17,38 +18,82 @@ class _myTimerState extends State<myTimer> {
     Color(0xFF6B728E),
     Color(0xFFFFECEF)
   ];
+  int _start = 0;
+  bool _vibrationActive = false;
+  Timer? _timer;
   double percentage = 0;
-  int countclicks = 0;
   double perk = 0;
-  int timeleft = 0;
-  Timer? _mytimer;
-  bool stopped = false;
 
-  void _countodown() {
-    if (stopped == false) {
-      _mytimer = Timer.periodic(Duration(seconds: 1), ((Timer timer) {
-        if (timeleft > 0) {
-          setState(() {
-            timeleft--;
-            if (percentage > 0.1) {
-              percentage = percentage - perk;
-            }
-          });
-        } else {
-          setState(() {
-            percentage = 0;
-            timeleft = 0;
-            _mytimer!.cancel();
-          });
-        }
-      }));
-    } else {
-      _mytimer = null;
+  void startTimer(int timerDuration) {
+    if (_timer != null) {
+      _timer!.cancel();
+      cancelVibrate();
+    }
+    setState(() {
+      _start = timerDuration;
+    });
+    const oneSec = Duration(milliseconds: 50);
+    _timer = Timer.periodic(
+      oneSec,
+      (Timer timer) => setState(
+        () {
+          if (_start < 1) {
+            timer.cancel();
+            vibrate();
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      backgroundColor: color_hunt[2],
+                      title: Center(
+                        child: Text("YOUR TIME IS DONE HERE",
+                            style: TextStyle(
+                                fontFamily: 'MS Gothic', color: Colors.white)),
+                      ),
+                      actions: [
+                        Center(
+                          child: TextButton(
+                              onPressed: () {
+                                cancelVibrate();
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("STOP")),
+                        )
+                      ],
+                    ));
+          } else {
+            _start = _start - 1;
+            percentage = percentage - perk;
+          }
+        },
+      ),
+    );
+  }
+
+  void cancelVibrate() {
+    _vibrationActive = false;
+    Vibration.cancel();
+  }
+
+  void vibrate() async {
+    _vibrationActive = true;
+    bool? hasvib = await Vibration.hasVibrator();
+    if (hasvib!) {
+      while (_vibrationActive) {
+        Vibration.vibrate(duration: 1000);
+        await Future.delayed(Duration(seconds: 2));
+      }
     }
   }
 
+  void pauseTimer() {
+    if (_timer != null) _timer!.cancel();
+  }
+
+  void unpauseTimer() => startTimer(_start);
+
   @override
   void dispose() {
+    _timer!.cancel();
     super.dispose();
   }
 
@@ -87,8 +132,7 @@ class _myTimerState extends State<myTimer> {
   Widget pausetheclock() {
     return GestureDetector(
       onTap: () {
-        stopped = true;
-        _countodown();
+        pauseTimer();
       },
       child: Stack(
         alignment: Alignment.center,
@@ -112,8 +156,7 @@ class _myTimerState extends State<myTimer> {
   Widget runtheclock() {
     return GestureDetector(
       onTap: () {
-        stopped = false;
-        _countodown();
+        unpauseTimer();
       },
       child: Stack(
         alignment: Alignment.center,
@@ -149,7 +192,7 @@ class _myTimerState extends State<myTimer> {
             width: 200,
             decoration: BoxDecoration(
                 color: color_hunt[2], borderRadius: BorderRadius.circular(100)),
-            child: Text(formatedTime(timeInSecond: timeleft),
+            child: Text(formatedTime(timeInSecond: _start),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 50,
@@ -180,41 +223,30 @@ class _myTimerState extends State<myTimer> {
       children: [
         GestureDetector(
             onTapUp: (details) {
-              countclicks++;
               setState(() {
-                _mytimer = null;
+                percentage = 1;
+                perk = 1 / 300;
               });
-              percentage = 1;
-              timeleft = 5 * 60;
-              perk = 1 / (5 * 60);
-              _countodown();
+
+              startTimer(60 * 5);
             },
             child: timermaker("05:00")),
         GestureDetector(
             onTapUp: (details) {
-              countclicks++;
               setState(() {
-                _mytimer = null;
+                percentage = 1;
+                perk = 1 / 600;
               });
-              percentage = 1;
-              timeleft = 10 * 60;
-              perk = 1 / (10 * 60);
-
-              _countodown();
+              startTimer(60 * 10);
             },
             child: timermaker("10:00")),
         GestureDetector(
             onTapUp: (details) {
-              countclicks++;
               setState(() {
-                _mytimer = null;
+                percentage = 1;
+                perk = 1 / 1500;
               });
-
-              percentage = 1;
-              timeleft = 25 * 60;
-              perk = 1 / (25 * 60);
-
-              _countodown();
+              startTimer(60 * 25);
             },
             child: timermaker("25:00"))
       ],

@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:puzzeled_up/Pages/homepage.dart';
-import 'package:puzzeled_up/Pages/timerStamp.dart';
 
 void main() => runApp(MyApp());
 

@@ -69,7 +69,7 @@ class homepage extends StatelessWidget {
                         onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => CountdownCard()),
+                                  builder: (context) => myTimer()),
                             ),
                         child: buildabox("Timer", "timer"))
                   ],
