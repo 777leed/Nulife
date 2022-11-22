@@ -107,16 +107,22 @@ class _myTimerState extends State<myTimer> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: color_hunt[0],
+      appBar: AppBar(
+        title: title(),
+        centerTitle: true,
+        backgroundColor: color_hunt[0],
+        leading: BackButton(
+          color: Colors.white,
+          onPressed: () {},
+        ),
+        shadowColor: Colors.transparent,
+      ),
       body: SafeArea(
         child: Padding(
             padding: const EdgeInsets.all(25.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                    padding: const EdgeInsets.only(bottom: 25), child: title()),
-                body()
-              ],
+              children: [body()],
             )),
       ),
     );
@@ -126,7 +132,7 @@ class _myTimerState extends State<myTimer> {
     return Text(
       "Time Shrine",
       style:
-          TextStyle(fontSize: 30, fontFamily: 'MS Gothic', color: Colors.white),
+          TextStyle(fontSize: 20, fontFamily: 'MS Gothic', color: Colors.white),
     );
   }
 
