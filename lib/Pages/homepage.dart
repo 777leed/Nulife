@@ -19,42 +19,45 @@ class homepage extends StatelessWidget {
         backgroundColor: color_hunt[0],
         body: SafeArea(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(35),
-                child: Column(
-                  children: [
-                    Text(
-                      "Hey Leed,\nGlad to see you again",
-                      style: TextStyle(
-                          fontSize: 28,
-                          fontFamily: 'MS Gothic',
-                          color: Colors.white),
-                      textAlign: TextAlign.left,
+              Text(
+                "Hey Leed,\nGlad to see you again",
+                style: TextStyle(
+                    fontSize: 28, fontFamily: 'MS Gothic', color: Colors.white),
+                textAlign: TextAlign.left,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(35),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 70,
+                        ),
+                        GestureDetector(
+                            onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const toDoList()),
+                                ),
+                            child: buildabox("To-do List", "checklist")),
+                        SizedBox(height: 50),
+                        buildabox("Puzzled Up", "blocks"),
+                        SizedBox(height: 50),
+                        GestureDetector(
+                            onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => myTimer()),
+                                ),
+                            child: buildabox("Timer", "timer"))
+                      ],
                     ),
-                    SizedBox(
-                      height: 70,
-                    ),
-                    GestureDetector(
-                        onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const toDoList()),
-                            ),
-                        child: buildabox("To-do List", "checklist")),
-                    SizedBox(height: 50),
-                    buildabox("Puzzled Up", "blocks"),
-                    SizedBox(height: 50),
-                    GestureDetector(
-                        onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => myTimer()),
-                            ),
-                        child: buildabox("Timer", "timer"))
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),

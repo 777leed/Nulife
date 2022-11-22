@@ -48,21 +48,24 @@ class _toDoListState extends State<toDoList> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: color_hunt[0],
+      appBar: AppBar(
+        title: Text("To-do List"),
+        centerTitle: true,
+        backgroundColor: color_hunt[0],
+        leading: BackButton(
+          color: Colors.white,
+          onPressed: () {},
+        ),
+        shadowColor: Colors.transparent,
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(25.0),
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    "To-do List",
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontFamily: 'MS Gothic',
-                        color: Colors.white),
-                  ),
                   GestureDetector(
                     onTap: () => showDialog(
                         context: context,
