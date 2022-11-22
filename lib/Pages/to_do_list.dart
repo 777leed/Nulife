@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import 'package:puzzeled_up/Utils/Chameleon.dart';
 import 'package:puzzeled_up/Utils/sqldatabase.dart';
 import 'package:puzzeled_up/Utils/todoelemnt.dart';
 
@@ -37,12 +38,7 @@ class _toDoListState extends State<toDoList> {
         "INSERT INTO 'todolist' ('prompt') VALUES ('${taskprompt.text.trim()}')");
   }
 
-  final List color_hunt = [
-    Color(0xFF404258),
-    Color(0xFF474E68),
-    Color(0xFF6B728E),
-    Color(0xFFFFECEF)
-  ];
+  final List color_hunt = chameleon.color_hunt;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +66,7 @@ class _toDoListState extends State<toDoList> {
                     onTap: () => showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                              backgroundColor: color_hunt[2],
+                              backgroundColor: color_hunt[1],
                               title: Text("Task Arsenal",
                                   style: TextStyle(
                                       fontFamily: 'MS Gothic',
@@ -102,7 +98,7 @@ class _toDoListState extends State<toDoList> {
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
-                              color: color_hunt[2],
+                              color: color_hunt[1],
                               borderRadius: BorderRadius.circular(10)),
                         ),
                         SizedBox(
@@ -141,6 +137,7 @@ class _toDoListState extends State<toDoList> {
                                         itemBuilder: ((context, index) {
                                           Text mytitle = Text(
                                             "${snapshot.data![index]['prompt']}",
+                                            textAlign: TextAlign.justify,
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 fontFamily: 'MS Gothic',

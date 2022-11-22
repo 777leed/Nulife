@@ -3,24 +3,43 @@
 import 'package:flutter/material.dart';
 import 'package:puzzeled_up/Pages/timerStamp.dart';
 import 'package:puzzeled_up/Pages/to_do_list.dart';
+import 'package:puzzeled_up/Utils/Chameleon.dart';
 
 class homepage extends StatelessWidget {
-  static List color_hunt = [
-    Color(0xFF404258),
-    Color(0xFF474E68),
-    Color(0xFF6B728E),
-    Color(0xFFFFECEF)
-  ];
+  // static List color_hunt = [
+  //   Color(0xFF404258),
+  //   Color(0xFF474E68),
+  //   Color(0xFF6B728E),
+  //   Color(0xFFFFECEF)
+  // ];
   const homepage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: color_hunt[0],
+        backgroundColor: chameleon.color_hunt[0],
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    height: 70,
+                    width: 70,
+                    decoration: BoxDecoration(
+                        color: chameleon.color_hunt[1],
+                        borderRadius: BorderRadius.circular(100)),
+                  ),
+                  SizedBox(
+                    height: 50,
+                    width: 50,
+                    child: Image.asset('Assets/man.png'),
+                  )
+                ],
+              ),
               Text(
                 "Hey Leed,\nGlad to see you again",
                 style: TextStyle(
@@ -34,9 +53,6 @@ class homepage extends StatelessWidget {
                     padding: const EdgeInsets.all(35),
                     child: Column(
                       children: [
-                        SizedBox(
-                          height: 70,
-                        ),
                         GestureDetector(
                             onTap: () => Navigator.push(
                                   context,
@@ -45,7 +61,7 @@ class homepage extends StatelessWidget {
                                 ),
                             child: buildabox("To-do List", "checklist")),
                         SizedBox(height: 50),
-                        buildabox("Puzzled Up", "blocks"),
+                        buildabox("Superpowers", "punch"),
                         SizedBox(height: 50),
                         GestureDetector(
                             onTap: () => Navigator.push(
@@ -64,13 +80,15 @@ class homepage extends StatelessWidget {
         ));
   }
 
+//this thing builds the 3 boxes so far and their titles as well
   Widget buildabox(String txt, String img) {
     return Row(
       children: [
         Stack(alignment: Alignment.center, children: [
           Container(
             decoration: BoxDecoration(
-                color: color_hunt[1], borderRadius: BorderRadius.circular(25)),
+                color: chameleon.color_hunt[1],
+                borderRadius: BorderRadius.circular(25)),
             height: 80,
             width: 80,
           ),

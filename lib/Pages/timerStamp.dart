@@ -2,6 +2,7 @@
 import 'package:percent_indicator/percent_indicator.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:puzzeled_up/Utils/Chameleon.dart';
 import 'package:vibration/vibration.dart';
 
 class myTimer extends StatefulWidget {
@@ -12,12 +13,7 @@ class myTimer extends StatefulWidget {
 }
 
 class _myTimerState extends State<myTimer> {
-  final List color_hunt = [
-    Color(0xFF404258),
-    Color(0xFF474E68),
-    Color(0xFF6B728E),
-    Color(0xFFFFECEF)
-  ];
+  final List color_hunt = chameleon.color_hunt;
   int _start = 0;
   bool _vibrationActive = false;
   Timer? _timer;
@@ -43,7 +39,7 @@ class _myTimerState extends State<myTimer> {
             showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                      backgroundColor: color_hunt[2],
+                      backgroundColor: color_hunt[1],
                       title: Center(
                         child: Text("YOUR TIME IS DONE HERE",
                             textAlign: TextAlign.center,
@@ -99,7 +95,10 @@ class _myTimerState extends State<myTimer> {
 
   @override
   void dispose() {
-    _timer!.cancel();
+    if (_timer != null) {
+      _timer!.cancel();
+    }
+
     super.dispose();
   }
 
@@ -216,14 +215,14 @@ class _myTimerState extends State<myTimer> {
           radius: 110,
           lineWidth: 40,
           percent: percentage,
-          progressColor: color_hunt[3],
-          backgroundColor: color_hunt[1],
+          progressColor: color_hunt[2],
+          backgroundColor: Colors.white,
           center: Container(
             alignment: Alignment.center,
             height: 200,
             width: 200,
             decoration: BoxDecoration(
-                color: color_hunt[2], borderRadius: BorderRadius.circular(100)),
+                color: color_hunt[1], borderRadius: BorderRadius.circular(100)),
             child: Text(formatedTime(timeInSecond: _start),
                 textAlign: TextAlign.center,
                 style: TextStyle(
