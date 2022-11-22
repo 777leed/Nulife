@@ -32,7 +32,7 @@ class _myTimerState extends State<myTimer> {
     setState(() {
       _start = timerDuration;
     });
-    const oneSec = Duration(milliseconds: 50);
+    const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) => setState(
@@ -46,8 +46,14 @@ class _myTimerState extends State<myTimer> {
                       backgroundColor: color_hunt[2],
                       title: Center(
                         child: Text("YOUR TIME IS DONE HERE",
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontFamily: 'MS Gothic', color: Colors.white)),
+                      ),
+                      content: SizedBox(
+                        height: 80,
+                        width: 80,
+                        child: Image.asset('Assets/time is up.png'),
                       ),
                       actions: [
                         Center(
@@ -103,20 +109,38 @@ class _myTimerState extends State<myTimer> {
       backgroundColor: color_hunt[0],
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Center(
+            padding: const EdgeInsets.all(25.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                circleoftime(),
-                SizedBox(
-                  height: 20,
-                ),
-                rowofclocks()
+                Padding(
+                    padding: const EdgeInsets.only(bottom: 25), child: title()),
+                body()
               ],
-            ),
+            )),
+      ),
+    );
+  }
+
+  Widget title() {
+    return Text(
+      "Time Shrine",
+      style:
+          TextStyle(fontSize: 30, fontFamily: 'MS Gothic', color: Colors.white),
+    );
+  }
+
+  Widget body() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          circleoftime(),
+          SizedBox(
+            height: 20,
           ),
-        ),
+          rowofclocks()
+        ],
       ),
     );
   }
@@ -156,7 +180,9 @@ class _myTimerState extends State<myTimer> {
   Widget runtheclock() {
     return GestureDetector(
       onTap: () {
-        unpauseTimer();
+        if (_start != 0) {
+          unpauseTimer();
+        }
       },
       child: Stack(
         alignment: Alignment.center,
@@ -168,8 +194,8 @@ class _myTimerState extends State<myTimer> {
                 color: color_hunt[1], borderRadius: BorderRadius.circular(100)),
           ),
           SizedBox(
-            height: 40,
-            width: 40,
+            height: 50,
+            width: 50,
             child: Image.asset('Assets/play.png'),
           )
         ],
@@ -206,11 +232,11 @@ class _myTimerState extends State<myTimer> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            pausetheclock(),
+            runtheclock(),
             SizedBox(
               width: 5,
             ),
-            runtheclock()
+            pausetheclock()
           ],
         )
       ],

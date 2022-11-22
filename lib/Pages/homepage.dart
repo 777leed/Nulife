@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:puzzeled_up/Pages/clonestamp.dart';
 import 'package:puzzeled_up/Pages/timerStamp.dart';
 import 'package:puzzeled_up/Pages/to_do_list.dart';
 
@@ -17,24 +16,6 @@ class homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: color_hunt[2],
-          selectedItemColor: color_hunt[0],
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home, color: Color(0xFF404258)),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.celebration, color: Color(0xFF404258)),
-              label: 'Achievements',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.settings, color: Color(0xFF404258)),
-              label: 'Settings',
-            ),
-          ],
-        ),
         backgroundColor: color_hunt[0],
         body: SafeArea(
           child: Column(
