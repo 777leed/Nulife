@@ -20,4 +20,4 @@ at the homepage make the number of tasks that are due and also the level of your
 # The Change
 Then as I always do I made some modifications on the initial Idea to be better perceived and more fun, I'll be updating this description soon...
 
-![Good Bye for now]([https://www.google.com/url?sa=i&url=https%3A%2F%2Fgfycat.com%2Fdiscover%2Fgoodbye-gifs&psig=AOvVaw2VMnNFRjaorqFaJNdWol4Y&ust=1669279308863000&source=images&cd=vfe&ved=0CBEQjhxqFwoTCJiMnpr0w_sCFQAAAAAdAAAAABAD](https://www.google.com/url?sa=i&url=https%3A%2F%2Fgfycat.com%2Fdiscover%2Fgoodbye-gifs&psig=AOvVaw2VMnNFRjaorqFaJNdWol4Y&ust=1669279308863000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCJiMnpr0w_sCFQAAAAAdAAAAABAD))
+<iframe src='https://gfycat.com/ifr/MeatySolidAplomadofalcon' frameborder='0' scrolling='no' allowfullscreen width='640' height='463'></iframe><p><a href="https://gfycat.com/discover/bye-gifs">from Bye GIFs</a></p>
