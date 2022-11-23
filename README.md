@@ -8,9 +8,10 @@ I am thinking of a crossed out task animation, I don't know how to execute it th
 maybe I can add a timer and notification for important tasks as well
 ## planning day events (Puzzled up or lego'ed up)
 puzzle or Lego structure for a more organized and flexible scheduling
+![lego](https://images.unsplash.com/photo-1587654780291-39c9404d746b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80)
+
 ## What did you learn today ?, Productivity & Feeling meter
 I am thinking about adding achievements of the day and how productive the day was as well as rating of feelings or something like that, so we can make live statistics.
-![lego](https://images.unsplash.com/photo-1587654780291-39c9404d746b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80)
 #### Online to do list
 see what your friends are doing in their day
 
