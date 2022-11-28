@@ -2,7 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:puzzeled_up/Pages/homepage.dart';
+import 'package:puzzeled_up/Pages/home.dart';
+import 'package:puzzeled_up/Pages/onboard/onboarding.dart';
+import 'package:puzzeled_up/Pages/timerStamp.dart';
+import 'package:puzzeled_up/Pages/to_do_list.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -31,11 +34,16 @@ class MyApp extends StatelessWidget {
       },
     );
     return MaterialApp(
+      routes: {
+        '/home': (ctx) => homeUtility(),
+        '/todolist': (ctx) => toDoList(),
+        'timer': (ctx) => myTimer(),
+      },
       theme: ThemeData(
         primarySwatch: kPrimaryColor,
       ),
       debugShowCheckedModeBanner: false,
-      home: homepage(),
+      home: MyWidget(),
     );
   }
 }

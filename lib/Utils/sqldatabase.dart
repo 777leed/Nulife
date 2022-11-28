@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:puzzeled_up/Utils/todoelemnt.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -31,7 +32,14 @@ Create TABLE "todolist"(
 
 ''';
     await db.execute(sql);
-    print("DATABASE===================");
+    sql = '''
+Create TABLE "user"(
+  "id" INTEGER NOT NULL  PRIMARY KEY AUTOINCREMENT,
+  "name" TEXT NOT NULL
+) 
+
+''';
+    await db.execute(sql);
   }
 
   readData(String sql) async {
@@ -82,5 +90,15 @@ Create TABLE "todolist"(
     var databasePath = await getDatabasesPath();
     String path = join(databasePath, "todolist.db");
     await deleteDatabase(path);
+  }
+
+  Future adduser(TextEditingController usernamectrl) async {
+    await insertData(
+        "INSERT INTO 'user' ('name') VALUES ('${usernamectrl.text.trim()}')");
+  }
+
+  Future<List<Map>> greetings() async {
+    List<Map> response = await readData("SELECT * FROM user");
+    return response;
   }
 }

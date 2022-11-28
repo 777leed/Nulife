@@ -50,7 +50,9 @@ class _toDoListState extends State<toDoList> {
         backgroundColor: color_hunt[0],
         leading: BackButton(
           color: Colors.white,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         shadowColor: Colors.transparent,
       ),

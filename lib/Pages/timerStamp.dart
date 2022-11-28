@@ -28,7 +28,7 @@ class _myTimerState extends State<myTimer> {
     setState(() {
       _start = timerDuration;
     });
-    const oneSec = Duration(seconds: 1);
+    const oneSec = Duration(milliseconds: 50);
     _timer = Timer.periodic(
       oneSec,
       (Timer timer) => setState(
@@ -112,7 +112,9 @@ class _myTimerState extends State<myTimer> {
         backgroundColor: color_hunt[0],
         leading: BackButton(
           color: Colors.white,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         shadowColor: Colors.transparent,
       ),
