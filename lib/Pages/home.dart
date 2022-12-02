@@ -17,7 +17,6 @@ class homeUtility extends StatefulWidget {
 
 class _homeUtilityState extends State<homeUtility> {
   sqlDataBase sqldatabase = sqlDataBase();
-  bool firstTimeState = false;
 
   Future<List<Map>> readData() async {
     List<Map> response =
@@ -26,16 +25,12 @@ class _homeUtilityState extends State<homeUtility> {
     return response;
   }
 
-  checkOnBoard(bool firstTimeState) async {
-    final box = Hive.box('box');
-    await Hive.openBox("boxname");
-    firstTimeState = box.get('introduction') ?? true;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return checkOnBoard(firstTimeState)
-        ? const MyWidget()
+    final box = Hive.box('box');
+    bool firstTimeState = box.get('introduction') ?? true;
+    return firstTimeState
+        ? MyWidget()
         : Scaffold(
             backgroundColor: chameleon.color_hunt[0],
             body: SafeArea(

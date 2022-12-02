@@ -2,12 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
 import 'package:puzzeled_up/Pages/home.dart';
 import 'package:puzzeled_up/Pages/onboard/onboarding.dart';
 import 'package:puzzeled_up/Pages/timerStamp.dart';
 import 'package:puzzeled_up/Pages/to_do_list.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('box');
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Color(0xFF2a2356),
       systemNavigationBarColor: Color(0xFF2a2356)));
@@ -43,7 +47,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: kPrimaryColor,
       ),
       debugShowCheckedModeBanner: false,
-      home: MyWidget(),
+      home: homeUtility(),
     );
   }
 }

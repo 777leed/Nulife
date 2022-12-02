@@ -39,9 +39,7 @@ class _MyWidgetState extends State<MyWidget> {
           // When something changes
         },
         onDone: () async {
-          await Hive.openBox("boxname");
           final box = Hive.box('box');
-
           box.put('introduction', false);
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
@@ -126,10 +124,6 @@ class _MyWidgetState extends State<MyWidget> {
                 onTap: () {
                   sqldatabase.adduser(usernamecontroller);
                   usernamecontroller.text = "";
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => homeUtility()),
-                  );
                 },
                 child: Container(
                   alignment: Alignment.center,
