@@ -1,8 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:lottie/lottie.dart';
+import 'package:puzzeled_up/Models/User/User.dart';
 import 'package:puzzeled_up/Utils/Chameleon.dart';
 import 'package:hive/hive.dart';
 
@@ -28,38 +29,20 @@ class _MyWidgetState extends State<MyWidget> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: IntroductionScreen(
-        scrollPhysics:
-            const BouncingScrollPhysics(), //Default is BouncingScrollPhysics
-        rawPages: [
-          //If you don't want to use PageViewModel you can use this
-          fst(), sec(), SingleChildScrollView(child: third())
-        ],
-        //If you provide both rawPages and pages parameter, pages will be used.
-        onChange: (e) {
-          // When something changes
+        scrollPhysics: const BouncingScrollPhysics(),
+        rawPages: [fst(), sec(), SingleChildScrollView(child: third())],
+        onChange: (e) {},
+        onDone: () {
+          onDone();
         },
-        onDone: () async {
-          final box = Hive.box('box');
-          box.put('introduction', false);
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (BuildContext context) {
-                return const homeUtility();
-              },
-            ),
-          );
-        },
-        onSkip: () {
-          // You can also override onSkip callback
-        },
-        showSkipButton: true, //Is the skip button should be display
+        onSkip: () {},
+        showSkipButton: true,
         skip: const Icon(
           Icons.skip_next,
           color: Color(0xFF6ecbf6),
         ),
         next: const Icon(Icons.forward, color: Color(0xFF6ecbf6)),
         done: const Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
-
         dotsDecorator: DotsDecorator(
             size: const Size.square(10.0),
             activeSize: const Size(20.0, 10.0),
@@ -70,6 +53,23 @@ class _MyWidgetState extends State<MyWidget> {
                 borderRadius: BorderRadius.circular(25.0))),
       ),
     );
+  }
+
+  Future onDone() async {
+    final box = Hive.box('box');
+    box.put('introduction', false);
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return const homeUtility();
+        },
+      ),
+    );
+  }
+
+  void UserMaker() {
+    final box = Hive.box('Users');
+    box.put('UserInstance', User(usernamecontroller.text));
   }
 
   Widget third() {
@@ -122,7 +122,7 @@ class _MyWidgetState extends State<MyWidget> {
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: GestureDetector(
                 onTap: () {
-                  sqldatabase.adduser(usernamecontroller);
+                  UserMaker();
                   usernamecontroller.text = "";
                 },
                 child: Container(

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:puzzeled_up/Models/User/User.dart';
 import 'package:puzzeled_up/Pages/onboard/onboarding.dart';
 import 'package:puzzeled_up/Pages/profile.dart';
 import 'package:hive/hive.dart';
@@ -17,6 +18,7 @@ class homeUtility extends StatefulWidget {
 
 class _homeUtilityState extends State<homeUtility> {
   sqlDataBase sqldatabase = sqlDataBase();
+  final User? currentUser = User.getCurrentUser();
 
   Future<List<Map>> readData() async {
     List<Map> response =
@@ -101,28 +103,14 @@ class _homeUtilityState extends State<homeUtility> {
                       )
                     ],
                   ),
-                  FutureBuilder(
-                      future: sqldatabase.greetings(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<List<Map>> snapshot) {
-                        if (snapshot.hasData) {
-                          if (snapshot.data!.isNotEmpty) {
-                            return Text(
-                              "Hey ${snapshot.data![0]['name']},\nGlad to see you again",
-                              style: TextStyle(
-                                  fontSize: 28,
-                                  fontFamily: 'MS Gothic',
-                                  color: Colors.white),
-                              textAlign: TextAlign.left,
-                            );
-                          }
-                        }
-
-                        return Text(
-                          "User007",
-                          style: TextStyle(color: Colors.white),
-                        );
-                      }),
+                  Text(
+                    "Hey ${currentUser!.name},\nGlad to see you again",
+                    style: TextStyle(
+                        fontSize: 28,
+                        fontFamily: 'MS Gothic',
+                        color: Colors.white),
+                    textAlign: TextAlign.left,
+                  ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

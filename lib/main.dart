@@ -2,16 +2,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hive/hive.dart';
+import 'package:puzzeled_up/Models/Power/Power.dart';
 import 'package:puzzeled_up/Pages/home.dart';
-import 'package:puzzeled_up/Pages/onboard/onboarding.dart';
 import 'package:puzzeled_up/Pages/timerStamp.dart';
 import 'package:puzzeled_up/Pages/to_do_list.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'Models/User/User.dart';
 
 void main() async {
   await Hive.initFlutter();
+  Hive.registerAdapter(PowerAdapter());
+  Hive.registerAdapter(UserAdapter());
   await Hive.openBox('box');
+  await Hive.openBox('Users');
+  // User user;
+
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Color(0xFF2a2356),
       systemNavigationBarColor: Color(0xFF2a2356)));

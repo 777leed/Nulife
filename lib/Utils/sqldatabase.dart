@@ -32,14 +32,6 @@ Create TABLE "todolist"(
 
 ''';
     await db.execute(sql);
-    sql = '''
-Create TABLE "user"(
-  "id" INTEGER NOT NULL  PRIMARY KEY AUTOINCREMENT,
-  "name" TEXT NOT NULL
-) 
-
-''';
-    await db.execute(sql);
   }
 
   readData(String sql) async {
