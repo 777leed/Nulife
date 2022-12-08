@@ -12,6 +12,11 @@ class HiveLab {
     box.put('UserInstance', currentUser);
   }
 
+  int calcPowers() {
+    int i = currentUser!.PowerPuffs!.length;
+    return i;
+  }
+
   // remove powers from user
   void removePower(Power power) {
     currentUser!.PowerPuffs!.add(power);

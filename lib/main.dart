@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:puzzeled_up/Models/Power/Power.dart';
 import 'package:puzzeled_up/Pages/home.dart';
-import 'package:puzzeled_up/Pages/powers_page.dart';
 import 'package:puzzeled_up/Pages/timerStamp.dart';
 import 'package:puzzeled_up/Pages/to_do_list.dart';
 import 'package:hive_flutter/hive_flutter.dart';

@@ -17,20 +17,12 @@ class showBait extends StatefulWidget {
 }
 
 class _showBaitState extends State<showBait> {
-  // List donutsOnSale = [
-  //   // [ powerName, powerLevel, powerColor, imageName ]
-  //   ["Touch Typing", "36", Colors.blue, "Assets/bionic.png"],
-  //   ["Box Breathing", "45", Colors.red, "Assets/bionic.png"],
-  //   ["Chess", "84", Colors.purple, "Assets/bionic.png"],
-  //   ["Morse Code", "95", Colors.brown, "Assets/bionic.png"],
-  // ];
   User? currentUser = User.getCurrentUser();
   late List<Power>? powerList = getlist();
   sqlDataBase sqldatabase = sqlDataBase();
   var powerName = TextEditingController();
   var powerDesc = TextEditingController();
   List<Power>? getlist() {
-    HiveLab().addPower(Power("Chess", "..", 13));
     return currentUser!.PowerPuffs;
   }
 
@@ -106,27 +98,34 @@ class _showBaitState extends State<showBait> {
                 )
               ],
             ),
-            Expanded(
-              child: GridView.builder(
-                itemCount: powerList!.length,
-                padding: EdgeInsets.all(12),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 1 / 1.5,
-                ),
-                itemBuilder: (context, index) {
-                  return PowerTile(
-                    powerName: powerList![index].power_name,
-                    powerLevel: powerList![index].streak.toString(),
-                    powerColor: Colors.purple,
-                    imageName: "Assets/bionic.png",
-                  );
-                },
-              ),
-            )
+            renderPowers()
           ],
         ),
       )),
     );
+  }
+
+  Widget renderPowers() {
+    if (HiveLab().calcPowers() != 0) {
+      return Expanded(
+        child: GridView.builder(
+          itemCount: powerList!.length,
+          padding: EdgeInsets.all(12),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 1 / 1.5,
+          ),
+          itemBuilder: (context, index) {
+            return PowerTile(
+              powerName: powerList![index].power_name,
+              powerLevel: powerList![index].streak.toString(),
+              powerColor: Colors.purple,
+              imageName: "Assets/bionic.png",
+            );
+          },
+        ),
+      );
+    }
+    return Text("Nothing to see here");
   }
 }
