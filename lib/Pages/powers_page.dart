@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:puzzeled_up/Models/Power/Power.dart';
 import 'package:puzzeled_up/Utils/Chameleon.dart';
+import 'package:puzzeled_up/Utils/Hive.dart';
+import 'package:puzzeled_up/Utils/addstack.dart';
+import 'package:puzzeled_up/Utils/myAppBar.dart';
 
 import '../Utils/Power_tile.dart';
+import '../Models/User/User.dart';
+import '../Utils/sqldatabase.dart';
 
 class showBait extends StatefulWidget {
   const showBait({super.key});
@@ -11,41 +17,115 @@ class showBait extends StatefulWidget {
 }
 
 class _showBaitState extends State<showBait> {
-  List donutsOnSale = [
-    // [ powerName, powerLevel, powerColor, imageName ]
-    ["Touch Typing", "36", Colors.blue, "Assets/bionic.png"],
-    ["Box Breathing", "45", Colors.red, "Assets/bionic.png"],
-    ["Chess", "84", Colors.purple, "Assets/bionic.png"],
-    ["Morse Code", "95", Colors.brown, "Assets/bionic.png"],
-  ];
-  @override
+  // List donutsOnSale = [
+  //   // [ powerName, powerLevel, powerColor, imageName ]
+  //   ["Touch Typing", "36", Colors.blue, "Assets/bionic.png"],
+  //   ["Box Breathing", "45", Colors.red, "Assets/bionic.png"],
+  //   ["Chess", "84", Colors.purple, "Assets/bionic.png"],
+  //   ["Morse Code", "95", Colors.brown, "Assets/bionic.png"],
+  // ];
+  User? currentUser = User.getCurrentUser();
+  late List<Power>? powerList = getlist();
+  sqlDataBase sqldatabase = sqlDataBase();
+  var powerName = TextEditingController();
+  var powerDesc = TextEditingController();
+  List<Power>? getlist() {
+    HiveLab().addPower(Power("Chess", "..", 13));
+    return currentUser!.PowerPuffs;
+  }
+
+  Future addPower(TextEditingController descController,
+      TextEditingController nameController) {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              backgroundColor: chameleon.color_hunt[1],
+              title: Text("Power Arsenal",
+                  style:
+                      TextStyle(fontFamily: 'MS Gothic', color: Colors.white)),
+              content: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextField(
+                    cursorColor: chameleon.color_hunt[0],
+                    controller: nameController,
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      focusColor: chameleon.color_hunt[0],
+                      hintText: 'Add Your A Name Here',
+                    ),
+                  ),
+                  TextField(
+                    cursorColor: chameleon.color_hunt[0],
+                    controller: descController,
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      focusColor: chameleon.color_hunt[0],
+                      hintText: 'Add A Description Here',
+                    ),
+                  )
+                ],
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Power power = Power(nameController.text.trim(),
+                          descController.text.trim(), 0);
+                      HiveLab().addPower(power);
+                      descController.text = "";
+                      nameController.text = "";
+                      Navigator.of(context).pop();
+                      setState(() {});
+                    },
+                    child: Text("Add"))
+              ],
+            ));
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: chameleon.color_hunt[0],
+      appBar: myAppBar(
+        barTitle: "Power-Ups",
+      ),
       body: SafeArea(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: GridView.builder(
-              itemCount: donutsOnSale.length,
-              padding: EdgeInsets.all(12),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 1 / 1.5,
-              ),
-              itemBuilder: (context, index) {
-                return PowerTile(
-                  powerName: donutsOnSale[index][0],
-                  powerLevel: donutsOnSale[index][1],
-                  powerColor: donutsOnSale[index][2],
-                  imageName: donutsOnSale[index][3],
-                );
-              },
+          child: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  child: plusbutton(),
+                  onTap: () {
+                    addPower(powerDesc, powerName);
+                  },
+                )
+              ],
             ),
-          )
-        ],
+            Expanded(
+              child: GridView.builder(
+                itemCount: powerList!.length,
+                padding: EdgeInsets.all(12),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1 / 1.5,
+                ),
+                itemBuilder: (context, index) {
+                  return PowerTile(
+                    powerName: powerList![index].power_name,
+                    powerLevel: powerList![index].streak.toString(),
+                    powerColor: Colors.purple,
+                    imageName: "Assets/bionic.png",
+                  );
+                },
+              ),
+            )
+          ],
+        ),
       )),
     );
   }

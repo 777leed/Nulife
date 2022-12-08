@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:puzzeled_up/Models/User/User.dart';
 import 'package:puzzeled_up/Pages/onboard/onboarding.dart';
+import 'package:puzzeled_up/Pages/powers_page.dart';
 import 'package:puzzeled_up/Pages/profile.dart';
 import 'package:hive/hive.dart';
 import 'package:puzzeled_up/Pages/timerStamp.dart';
@@ -129,7 +130,13 @@ class _homeUtilityState extends State<homeUtility> {
                                     }),
                                 child: buildabox("To-do List", "checklist")),
                             SizedBox(height: 50),
-                            buildabox("Superpowers", "punch"),
+                            GestureDetector(
+                                onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => showBait()),
+                                    ),
+                                child: buildabox("Superpowers", "punch")),
                             SizedBox(height: 50),
                             GestureDetector(
                                 onTap: () => Navigator.push(

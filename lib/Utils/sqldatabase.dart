@@ -89,6 +89,11 @@ Create TABLE "todolist"(
         "INSERT INTO 'user' ('name') VALUES ('${usernamectrl.text.trim()}')");
   }
 
+  Future addtask(TextEditingController taskprompt) async {
+    await insertData(
+        "INSERT INTO 'todolist' ('prompt') VALUES ('${taskprompt.text.trim()}')");
+  }
+
   Future<List<Map>> greetings() async {
     List<Map> response = await readData("SELECT * FROM user");
     return response;

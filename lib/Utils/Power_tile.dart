@@ -41,7 +41,7 @@ class PowerTile extends StatelessWidget {
                   ),
                   padding: EdgeInsets.all(12),
                   child: Text(
-                    '\$$powerLevel',
+                    'lvl $powerLevel',
                     style: TextStyle(
                       color: powerColor[800],
                       fontWeight: FontWeight.bold,
@@ -67,13 +67,8 @@ class PowerTile extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            const SizedBox(height: 4),
-            Text(
-              'Dunkins',
-              style: TextStyle(color: Colors.grey[600]),
-            ),
 
-            // love icon + add button
+            // power on icon
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Row(
@@ -81,14 +76,8 @@ class PowerTile extends StatelessWidget {
                 children: [
                   // love icon
                   Icon(
-                    Icons.favorite,
+                    Icons.power_settings_new,
                     color: Colors.pink[400],
-                  ),
-
-                  // plus button
-                  Icon(
-                    Icons.add,
-                    color: Colors.grey[800],
                   ),
                 ],
               ),

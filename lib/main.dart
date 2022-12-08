@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: kPrimaryColor,
       ),
       debugShowCheckedModeBanner: false,
-      home: showBait(),
+      home: homeUtility(),
     );
   }
 }

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:puzzeled_up/Utils/Chameleon.dart';
 import 'package:vibration/vibration.dart';
 
+import '../Utils/myAppBar.dart';
+
 class myTimer extends StatefulWidget {
   const myTimer({super.key});
 
@@ -106,17 +108,8 @@ class _myTimerState extends State<myTimer> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: color_hunt[0],
-      appBar: AppBar(
-        title: title(),
-        centerTitle: true,
-        backgroundColor: color_hunt[0],
-        leading: BackButton(
-          color: Colors.white,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        shadowColor: Colors.transparent,
+      appBar: myAppBar(
+        barTitle: "Power-Ups",
       ),
       body: SafeArea(
         child: Padding(
@@ -126,14 +119,6 @@ class _myTimerState extends State<myTimer> {
               children: [body()],
             )),
       ),
-    );
-  }
-
-  Widget title() {
-    return Text(
-      "Time Shrine",
-      style:
-          TextStyle(fontSize: 20, fontFamily: 'MS Gothic', color: Colors.white),
     );
   }
 

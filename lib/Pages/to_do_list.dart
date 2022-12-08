@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:puzzeled_up/Utils/Chameleon.dart';
+import 'package:puzzeled_up/Utils/addstack.dart';
 import 'package:puzzeled_up/Utils/sqldatabase.dart';
+
+import '../Utils/myAppBar.dart';
 
 class toDoList extends StatefulWidget {
   const toDoList({super.key});
@@ -13,6 +16,36 @@ class toDoList extends StatefulWidget {
 class _toDoListState extends State<toDoList> {
   var taskprompt = TextEditingController();
   sqlDataBase sqldatabase = sqlDataBase();
+
+  Future addtask(TextEditingController textController) {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              backgroundColor: chameleon.color_hunt[1],
+              title: Text("Task Arsenal",
+                  style:
+                      TextStyle(fontFamily: 'MS Gothic', color: Colors.white)),
+              content: TextField(
+                cursorColor: chameleon.color_hunt[0],
+                controller: textController,
+                autofocus: true,
+                decoration: InputDecoration(
+                  focusColor: chameleon.color_hunt[0],
+                  hintText: 'Add Your Task Here',
+                ),
+              ),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      sqldatabase.addtask(textController);
+                      textController.text = "";
+                      Navigator.of(context).pop();
+                      setState(() {});
+                    },
+                    child: Text("Add"))
+              ],
+            ));
+  }
 
   Future deleteall() async {
     await sqldatabase.deleteData("DELETE from todolist");
@@ -32,28 +65,14 @@ class _toDoListState extends State<toDoList> {
     return response;
   }
 
-  Future addtask() async {
-    await sqldatabase.insertData(
-        "INSERT INTO 'todolist' ('prompt') VALUES ('${taskprompt.text.trim()}')");
-  }
-
   final List color_hunt = chameleon.color_hunt;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: color_hunt[0],
-      appBar: AppBar(
-        title: Text("To-do List"),
-        centerTitle: true,
-        backgroundColor: color_hunt[0],
-        leading: BackButton(
-          color: Colors.white,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        shadowColor: Colors.transparent,
+      appBar: myAppBar(
+        barTitle: "To-do List",
       ),
       body: SafeArea(
         child: Padding(
@@ -64,52 +83,11 @@ class _toDoListState extends State<toDoList> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GestureDetector(
-                    onTap: () => showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                              backgroundColor: color_hunt[1],
-                              title: Text("Task Arsenal",
-                                  style: TextStyle(
-                                      fontFamily: 'MS Gothic',
-                                      color: Colors.white)),
-                              content: TextField(
-                                cursorColor: color_hunt[0],
-                                controller: taskprompt,
-                                autofocus: true,
-                                decoration: InputDecoration(
-                                  focusColor: color_hunt[0],
-                                  hintText: 'Add Your Task Here',
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      addtask();
-                                      taskprompt.text = "";
-                                      Navigator.of(context).pop();
-                                      setState(() {});
-                                    },
-                                    child: Text("Add"))
-                              ],
-                            )),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              color: color_hunt[1],
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                        SizedBox(
-                          height: 30,
-                          width: 30,
-                          child: Image.asset('Assets/plus.png'),
-                        )
-                      ],
-                    ),
-                  ),
+                    child: plusbutton(),
+                    onTap: () {
+                      addtask(taskprompt);
+                    },
+                  )
                 ],
               ),
               SizedBox(
