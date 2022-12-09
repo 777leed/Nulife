@@ -74,6 +74,10 @@ class _showBaitState extends State<showBait> {
             ));
   }
 
+  void deletePower(Power power) async {
+    HiveLab().removePower(power);
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: chameleon.color_hunt[0],
@@ -84,8 +88,6 @@ class _showBaitState extends State<showBait> {
           child: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -97,6 +99,9 @@ class _showBaitState extends State<showBait> {
                   },
                 )
               ],
+            ),
+            SizedBox(
+              height: 50,
             ),
             renderPowers()
           ],
@@ -117,6 +122,10 @@ class _showBaitState extends State<showBait> {
           ),
           itemBuilder: (context, index) {
             return PowerTile(
+              onHold: () {
+                deletePower(powerList![index]);
+                setState(() {});
+              },
               powerName: powerList![index].power_name,
               powerLevel: powerList![index].streak.toString(),
               powerColor: Colors.purple,

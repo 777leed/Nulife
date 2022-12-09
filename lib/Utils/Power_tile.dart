@@ -5,6 +5,7 @@ class PowerTile extends StatelessWidget {
   final String powerLevel;
   final powerColor;
   final String imageName;
+  final VoidCallback? onHold;
 
   final double borderRadius = 12;
 
@@ -14,12 +15,18 @@ class PowerTile extends StatelessWidget {
     required this.powerLevel,
     required this.powerColor,
     required this.imageName,
+    this.onHold,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size.zero, // Set this
+        padding: EdgeInsets.zero, // and this
+      ),
+      onLongPress: onHold,
+      onPressed: () {},
       child: Container(
         decoration: BoxDecoration(
           color: powerColor[50],

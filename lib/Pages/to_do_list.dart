@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:puzzeled_up/Utils/Chameleon.dart';
+import 'package:puzzeled_up/Utils/Hive.dart';
 import 'package:puzzeled_up/Utils/addstack.dart';
 import 'package:puzzeled_up/Utils/sqldatabase.dart';
 
@@ -135,6 +137,7 @@ class _toDoListState extends State<toDoList> {
                                                 String id =
                                                     "${snapshot.data![index]['id']}";
                                                 deleteElement(id);
+                                                HiveLab().addXp();
                                                 setState(() {});
                                               },
                                               leading: Icon(Icons.add_task),

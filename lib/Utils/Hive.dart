@@ -19,7 +19,12 @@ class HiveLab {
 
   // remove powers from user
   void removePower(Power power) {
-    currentUser!.PowerPuffs!.add(power);
+    currentUser!.PowerPuffs!.remove(power);
+    box.put('UserInstance', currentUser);
+  }
+
+  void addXp() {
+    currentUser!.setXp(currentUser!.xp! + 1);
     box.put('UserInstance', currentUser);
   }
 

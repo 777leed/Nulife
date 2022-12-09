@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:puzzeled_up/Utils/Chameleon.dart';
+import 'package:puzzeled_up/Utils/Hive.dart';
 import '../Utils/sqldatabase.dart';
 
 class myProfile extends StatefulWidget {
@@ -13,6 +14,7 @@ class myProfile extends StatefulWidget {
 
 class _myProfileState extends State<myProfile> {
   sqlDataBase sqldatabase = sqlDataBase();
+  String xp = HiveLab().currentUser!.getXp().toString();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +81,7 @@ class _myProfileState extends State<myProfile> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         textmaker(
-            "Tasks accomplished : 77",
+            "Tasks accomplished : ${xp}",
             Icon(
               Icons.add_task,
               color: chameleon.color_hunt[0],
