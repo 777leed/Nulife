@@ -149,14 +149,14 @@ class _myProfileState extends State<myProfile> {
             _pickImage(ImageSource.gallery);
           },
           child: Container(
-              height: 200.0,
-              width: 200.0,
+              height: 100.0,
+              width: 100.0,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.grey.shade200,
               ),
               child: Center(
-                child: box.get("exist") == false
+                child: box.get("exist") == null
                     ? Stack(
                         alignment: Alignment.center,
                         children: [
