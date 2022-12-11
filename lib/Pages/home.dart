@@ -40,10 +40,15 @@ class _homeUtilityState extends State<homeUtility> {
         ? MyWidget()
         : Scaffold(
             floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.more_horiz),
+              child: Icon(Icons.timer),
               backgroundColor: chameleon.color_hunt[1],
               splashColor: chameleon.color_hunt[5],
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => myTimer()),
+                );
+              },
             ),
             backgroundColor: chameleon.color_hunt[0],
             body: SafeArea(
@@ -209,7 +214,7 @@ class _homeUtilityState extends State<homeUtility> {
                                       MaterialPageRoute(
                                           builder: (context) => myTimer()),
                                     ),
-                                child: buildabox("Timer", "timer"))
+                                child: buildabox("Daily duppy", "night"))
                           ],
                         ),
                       ),
