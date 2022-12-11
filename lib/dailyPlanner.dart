@@ -1,5 +1,6 @@
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:puzzeled_up/Utils/Chameleon.dart';
 
@@ -11,6 +12,7 @@ class dailyPlanner extends StatefulWidget {
 }
 
 class _dailyPlannerState extends State<dailyPlanner> {
+  File? _image;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

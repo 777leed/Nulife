@@ -1,9 +1,14 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
+import 'dart:io';
+import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:puzzeled_up/Utils/Chameleon.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:puzzeled_up/Utils/Hive.dart';
 import '../Utils/sqldatabase.dart';
+import 'package:path/path.dart' as Path;
 
 class myProfile extends StatefulWidget {
   const myProfile({super.key});
@@ -13,8 +18,34 @@ class myProfile extends StatefulWidget {
 }
 
 class _myProfileState extends State<myProfile> {
+  final box = Hive.box('pfp');
+  File? _image;
+  final picker = ImagePicker();
   sqlDataBase sqldatabase = sqlDataBase();
   String xp = HiveLab().currentUser!.getXp().toString();
+
+  Future _pickImage(ImageSource source) async {
+    try {
+      final XFile? image = await picker.pickImage(source: source);
+
+      if (image == null) return;
+      File imageFile = File(image.path);
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      String appDocPath = appDocDir.path;
+      final fileName = Path.basename(imageFile.path);
+      final File localImage = await imageFile.copy('$appDocPath/$fileName');
+      box.put("imagepath", image.path);
+      box.put("exist", true);
+
+      setState(() {
+        _image = localImage;
+      });
+    } on PlatformException catch (e) {
+      print(e);
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,22 +144,41 @@ class _myProfileState extends State<myProfile> {
   Widget renderprofile() {
     return Column(
       children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              height: 100,
-              width: 100,
+        GestureDetector(
+          onTap: () {
+            _pickImage(ImageSource.gallery);
+          },
+          child: Container(
+              height: 200.0,
+              width: 200.0,
               decoration: BoxDecoration(
-                  color: chameleon.color_hunt[1],
-                  borderRadius: BorderRadius.circular(100)),
-            ),
-            SizedBox(
-              height: 70,
-              width: 70,
-              child: Image.asset('Assets/man.png'),
-            )
-          ],
+                shape: BoxShape.circle,
+                color: Colors.grey.shade200,
+              ),
+              child: Center(
+                child: box.get("exist") == false
+                    ? Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                color: chameleon.color_hunt[1],
+                                borderRadius: BorderRadius.circular(100)),
+                          ),
+                          SizedBox(
+                            height: 70,
+                            width: 70,
+                            child: Image.asset('Assets/man.png'),
+                          )
+                        ],
+                      )
+                    : CircleAvatar(
+                        backgroundImage: FileImage(File(box.get("imagepath"))),
+                        radius: 200.0,
+                      ),
+              )),
         ),
         Container(
           alignment: Alignment.center,
@@ -137,27 +187,12 @@ class _myProfileState extends State<myProfile> {
           decoration: BoxDecoration(
               color: chameleon.color_hunt[4],
               borderRadius: BorderRadius.circular(10)),
-          child: FutureBuilder(
-              future: sqldatabase.greetings(),
-              builder:
-                  (BuildContext context, AsyncSnapshot<List<Map>> snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data!.isNotEmpty) {
-                    return Text(
-                      "${snapshot.data![0]['name']}",
-                      style: TextStyle(
-                          color: chameleon.color_hunt[0],
-                          fontWeight: FontWeight.w500),
-                      textAlign: TextAlign.left,
-                    );
-                  }
-                }
-
-                return Text(
-                  "User007",
-                  style: TextStyle(color: Colors.white),
-                );
-              }),
+          child: Text(
+            "${HiveLab().currentUser!.getName()}",
+            style: TextStyle(
+                color: chameleon.color_hunt[0], fontWeight: FontWeight.w500),
+            textAlign: TextAlign.left,
+          ),
         ),
       ],
     );
