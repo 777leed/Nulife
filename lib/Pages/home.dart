@@ -39,6 +39,12 @@ class _homeUtilityState extends State<homeUtility> {
     return firstTimeState
         ? MyWidget()
         : Scaffold(
+            floatingActionButton: FloatingActionButton(
+              child: Icon(Icons.more_horiz),
+              backgroundColor: chameleon.color_hunt[1],
+              splashColor: chameleon.color_hunt[5],
+              onPressed: () {},
+            ),
             backgroundColor: chameleon.color_hunt[0],
             body: SafeArea(
               child: Column(
